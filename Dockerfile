@@ -5,7 +5,7 @@ MAINTAINER Remon Lam [remon@containerstack.io]
 ENV BITBUCKET_HOME /var/atlassian/bitbucket
 ENV BITBUCKET_INSTALL /opt/atlassian/bitbucket
 # Check Bitbucket version @ https://confluence.atlassian.com/bitbucketserver/bitbucket-server-5-0-release-notes-889528342.html
-ENV BITBUCKET_VERSION 4.14.4
+ENV BITBUCKET_VERSION 4.14.5
 # Check Connector/J version @ http://dev.mysql.com/downloads/connector/j/ it should be 5.1.30, testing with latest release
 ENV MYSQL_CONJ_VERSION 5.1.42
 
