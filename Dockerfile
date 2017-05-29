@@ -7,7 +7,7 @@ ENV BITBUCKET_INSTALL /opt/atlassian/bitbucket
 # Check Bitbucket version @ https://confluence.atlassian.com/bitbucketserver/bitbucket-server-5-0-release-notes-889528342.html
 ENV BITBUCKET_VERSION 4.12.0
 # Check Connector/J version @ http://dev.mysql.com/downloads/connector/j/ it should be 5.1.30, testing with latest release
-ENV MYSQL_CONJ_VERSION 5.1.38
+ENV MYSQL_CONJ_VERSION 5.1.42
 
 # Install Atlassian Bitbucket and helper tools and setup initial home
 # directory structure.
