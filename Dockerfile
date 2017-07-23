@@ -10,14 +10,11 @@ ENV BITBUCKET_INSTALL_DIR   /opt/atlassian/bitbucket
 
 VOLUME ["${BITBUCKET_HOME}"]
 
-# Expose HTTP and SSH ports
-EXPOSE 7990
-EXPOSE 7999
+
 
 WORKDIR $BITBUCKET_HOME
 
-CMD ["/entrypoint.sh", "-fg"]
-ENTRYPOINT ["/usr/local/bin/dumb-init"]
+
 
 RUN apk update -qq \
     && update-ca-certificates \
@@ -35,3 +32,10 @@ COPY . /tmp
 RUN mkdir -p                             ${BITBUCKET_INSTALL_DIR} \
     && curl -L --silent                  ${DOWNLOAD_URL} | tar -xz --strip-components=1 -C "$BITBUCKET_INSTALL_DIR" \
     && chown -R ${RUN_USER}:${RUN_GROUP} ${BITBUCKET_INSTALL_DIR}/
+
+    # Expose HTTP and SSH ports
+EXPOSE 7990
+EXPOSE 7999
+
+CMD ["/entrypoint.sh", "-fg"]
+ENTRYPOINT ["/usr/local/bin/dumb-init"]
