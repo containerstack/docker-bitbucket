@@ -1,5 +1,3 @@
-
-
 # Atlassian Bitbucket in a Docker container
 
 This is a containerized installation of Atlassian Bitbucket with Docker.
