@@ -1,61 +1,36 @@
-FROM openjdk:8
+FROM openjdk:8u121-alpine
 MAINTAINER Remon Lam [remon@containerstack.io]
 
-# Setup useful environment variables
-ENV BITBUCKET_HOME /var/atlassian/bitbucket
-ENV BITBUCKET_INSTALL /opt/atlassian/bitbucket
-# Check Bitbucket version @ https://confluence.atlassian.com/bitbucketserver/bitbucket-server-5-0-release-notes-889528342.html
-ENV BITBUCKET_VERSION 4.14.5
-# Check Connector/J version @ http://dev.mysql.com/downloads/connector/j/ it should be 5.1.30, testing with latest release
-ENV MYSQL_CONJ_VERSION 5.1.42
+ENV RUN_USER            daemon
+ENV RUN_GROUP           daemon
 
-# Install Atlassian Bitbucket and helper tools and setup initial home
-# directory structure.
-RUN set -x \
-    && apt-get update --quiet \
-    && apt-get install --quiet --yes --no-install-recommends git-core xmlstarlet \
-    && apt-get install --quiet --yes --no-install-recommends -t jessie-backports libtcnative-1 \
-    && apt-get clean \
-    && mkdir -p               "${BITBUCKET_HOME}/lib" \
-    && chmod -R 700           "${BITBUCKET_HOME}" \
-    && chown -R daemon:daemon "${BITBUCKET_HOME}" \
-    && mkdir -p               "${BITBUCKET_INSTALL}" \
-    && curl -Ls               "https://www.atlassian.com/software/stash/downloads/binary/atlassian-bitbucket-${BITBUCKET_VERSION}.tar.gz" | tar -zx --directory  "${BITBUCKET_INSTALL}" --strip-components=1 --no-same-owner \
-    && curl -Ls               "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_CONJ_VERSION}.tar.gz" | tar -xz --directory "${BITBUCKET_INSTALL}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-${MYSQL_CONJ_VERSION}/mysql-connector-java-${MYSQL_CONJ_VERSION}-bin.jar" \
-    && chmod -R 700           "${BITBUCKET_INSTALL}/conf" \
-    && chmod -R 700           "${BITBUCKET_INSTALL}/logs" \
-    && chmod -R 700           "${BITBUCKET_INSTALL}/temp" \
-    && chmod -R 700           "${BITBUCKET_INSTALL}/work" \
-    && chown -R daemon:daemon "${BITBUCKET_INSTALL}/conf" \
-    && chown -R daemon:daemon "${BITBUCKET_INSTALL}/logs" \
-    && chown -R daemon:daemon "${BITBUCKET_INSTALL}/temp" \
-    && chown -R daemon:daemon "${BITBUCKET_INSTALL}/work" \
-    && ln --symbolic          "/usr/lib/x86_64-linux-gnu/libtcnative-1.so" "${BITBUCKET_INSTALL}/lib/native/libtcnative-1.so" \
-    && sed --in-place         's/^# umask 0027$/umask 0027/g' "${BITBUCKET_INSTALL}/bin/setenv.sh" \
-    && xmlstarlet             ed --inplace \
-        --delete              "Server/Service/Engine/Host/@xmlValidation" \
-        --delete              "Server/Service/Engine/Host/@xmlNamespaceAware" \
-                              "${BITBUCKET_INSTALL}/conf/server.xml" \
-    && touch -d "@0"          "${BITBUCKET_INSTALL}/conf/server.xml"
+# https://confluence.atlassian.com/display/BitbucketServer/Bitbucket+Server+home+directory
+ENV BITBUCKET_HOME          /var/atlassian/application-data/bitbucket
+ENV BITBUCKET_INSTALL_DIR   /opt/atlassian/bitbucket
+ENV CONF_VERSION  6.3.0
 
-# Use the default unprivileged account. This could be considered bad practice
-# on systems where multiple processes end up being executed by 'daemon' but
-# here we only ever run one process anyway.
-USER daemon:daemon
+VOLUME ["${BITBUCKET_HOME}"]
 
-# Expose default HTTP and SSH ports.
-EXPOSE 7990 7999
+# Expose HTTP and SSH ports
+EXPOSE 7990
+EXPOSE 7999
 
-# Set volume mount points for installation and home directory. Changes to the
-# home directory needs to be persisted as well as parts of the installation
-# directory due to eg. logs.
-VOLUME ["/var/atlassian/bitbucket","/opt/atlassian/bitbucket/logs"]
+WORKDIR $BITBUCKET_HOME
 
-# Set the default working directory as the Bitbucket home directory.
-WORKDIR /var/atlassian/bitbucket
+CMD ["/entrypoint", "-fg"]
+ENTRYPOINT ["/sbin/tini", "--"]
 
-COPY "entrypoint.sh" "/"
-ENTRYPOINT ["/entrypoint.sh"]
+RUN apk update -qq \
+    && update-ca-certificates \
+    && apk add ca-certificates wget curl git openssh bash procps openssl perl ttf-dejavu tini \
+    && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
-# Run Atlassian Bitbucket as a foreground process by default.
-CMD ["/opt/atlassian/bitbucket/bin/catalina.sh", "run"]
+COPY entrypoint.sh /entrypoint
+
+ARG BITBUCKET_VERSION=5.0.6
+ARG DOWNLOAD_URL=https://downloads.atlassian.com/software/stash/downloads/atlassian-bitbucket-${BITBUCKET_VERSION}.tar.gz
+#COPY . /tmp
+
+RUN mkdir -p ${BITBUCKET_INSTALL_DIR} \
+    && curl -L --silent ${DOWNLOAD_URL} | tar -xz --strip-components=1 -C "$BITBUCKET_INSTALL_DIR" \
+    && chown -R ${RUN_USER}:${RUN_GROUP} ${BITBUCKET_INSTALL_DIR}/
