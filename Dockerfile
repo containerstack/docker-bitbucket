@@ -25,7 +25,7 @@ RUN apk update -qq \
     && apk add ca-certificates wget curl git openssh bash procps openssl perl ttf-dejavu tini \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
-COPY entrypoint /entrypoint
+COPY entrypoint.sh /entrypoint
 
 ARG BITBUCKET_VERSION=5.0.6
 ARG DOWNLOAD_URL=https://downloads.atlassian.com/software/stash/downloads/atlassian-bitbucket-${BITBUCKET_VERSION}.tar.gz
