@@ -4,8 +4,8 @@ MAINTAINER Remon Lam [remon@containerstack.io]
 ENV RUN_USER daemon
 ENV RUN_GROUP daemon
 # https://confluence.atlassian.com/display/BitbucketServer/Bitbucket+Server+home+directory
-ENV BITBUCKET_HOME /var/atlassian/application-data/bitbucket
-ENV BITBUCKET_INSTALL_DIR /opt/atlassian/bitbucket
+#ENV /var/atlassian/application-data/bitbucket /var/atlassian/application-data/bitbucket
+#ENV BITBUCKET_INSTALL_DIR /opt/atlassian/bitbucket
 ENV CONF_VERSION 6.3.0
 
 ARG BITBUCKET_VERSION=5.3.1
@@ -18,17 +18,17 @@ RUN apk update -qq \
 
 COPY entrypoint.sh /entrypoint
 
-RUN mkdir -p ${BITBUCKET_INSTALL_DIR} \
-    && curl -L --silent ${DOWNLOAD_URL} | tar -xz --strip-components=1 -C "$BITBUCKET_INSTALL_DIR" \
-    && chown -R ${RUN_USER}:${RUN_GROUP} ${BITBUCKET_INSTALL_DIR}/
+RUN mkdir -p /opt/atlassian/bitbucket \
+    && curl -L --silent ${DOWNLOAD_URL} | tar -xz --strip-components=1 -C "/opt/atlassian/bitbucket" \
+    && chown -R ${RUN_USER}:${RUN_GROUP} /opt/atlassian/bitbucket/
 
-VOLUME ["${BITBUCKET_HOME}"]
+VOLUME ["/var/atlassian/application-data/bitbucket"]
 
 # Expose the HTTP and SSH ports
 EXPOSE 7990
 EXPOSE 7999
 
-WORKDIR $BITBUCKET_HOME
+WORKDIR /var/atlassian/application-data/bitbucket
 
 CMD ["/entrypoint", "-fg"]
 ENTRYPOINT ["/sbin/tini", "--"]
