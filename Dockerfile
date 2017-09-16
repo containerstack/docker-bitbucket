@@ -7,6 +7,8 @@ ENV RUN_GROUP daemon
 ENV BITBUCKET_HOME /var/atlassian/application-data/bitbucket
 ENV BITBUCKET_INSTALL_DIR /opt/atlassian/bitbucket
 ENV CONF_VERSION 6.3.0
+ENV JVM_MINIMUM_MEMORY="512m"
+ENV JVM_MAXIMUM_MEMORY="1G"
 
 ARG BITBUCKET_VERSION=5.3.1
 ARG DOWNLOAD_URL=https://downloads.atlassian.com/software/stash/downloads/atlassian-bitbucket-${BITBUCKET_VERSION}.tar.gz
