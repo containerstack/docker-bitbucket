@@ -17,7 +17,7 @@ Currently this repo have the following versions;
 
 Go to [Branches](https://github.com/remonlam/docker-Bitbucket/branches) to see all different builds that are available.
 
-## Use the Automated Build image for a TEST deployment;
+## Use the Automated Build image for a TEST deployment
 
 To quickly get started running a Bitbucket instance, use the following command:
 ```bash
@@ -30,6 +30,7 @@ docker run --detach \
 Once the image has been downloaded and container is fully started (this could take a few minutes), browse to `http://[dockerhost]:8090` to finish the configuration and enter your trail/license key.
 
 NOTE: It's not recommended to run Bitbucket this way because it does NOT have persistent storage, once the container is removed everything is gone!!
+      Only use this methode for testing out Bitbucket!!
 
 ### What does all these options do?;
 detach          runs the container in the background
