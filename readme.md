@@ -24,7 +24,7 @@ To quickly get started running a Bitbucket instance, use the following command:
 docker run --detach \
            --name Bitbucket \
            --publish 8090:8090 \
-           remonlam/Bitbucket:latest
+           remonlam/bitbucket:latest
 ```
 
 Once the image has been downloaded and container is fully started (this could take a few minutes), browse to `http://[dockerhost]:8090` to finish the configuration and enter your trail/license key.
