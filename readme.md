@@ -8,12 +8,12 @@ It's possible to clone this repo and build the image on you're own machine, but 
 * [Docker Hub - Automated Build](https://hub.docker.com/r/remonlam/bitbucket/)
 * [Atlassian Bitbucket latest build](https://confluence.atlassian.com/doc/confluence-release-notes-327.html)
 * [Oracle MySQL Connector J latest build](http://dev.mysql.com/downloads/connector/j/)
-* [Atlassian Bitbucket](https://www.atlassian.com/software/Bitbucket)
+* [Atlassian Bitbucket](https://www.atlassian.com/software/bitbucket)
 
 ## Versions
 Currently this repo have the following versions;
-* 6.2.0 (latest - not yet tested)
-* 6.0.7 (latest - tested)
+* 5.3.1 (latest - not yet tested)
+* 5.3.1 (latest - tested)
 
 Go to [Branches](https://github.com/remonlam/docker-bitbucket/branches) to see all different builds that are available.
 
@@ -22,7 +22,7 @@ Go to [Branches](https://github.com/remonlam/docker-bitbucket/branches) to see a
 To quickly get started running a Bitbucket instance, use the following command:
 ```bash
 docker run --detach \
-           --name Bitbucket \
+           --name bitbucket \
            --publish 8090:8090 \
            remonlam/bitbucket:latest
 ```
@@ -40,14 +40,14 @@ publish         publish a port from the container to the outside world (docker n
 
 ## Use the Automated Build image for a PRODUCTION deployment;
 
-In order to make sure that what ever you or you're team is creating in Bitbucket is persistent even when the container is recreated it's useful to make the "/var/atlassian/Bitbucket" directory persistent.
+In order to make sure that what ever you or you're team is creating in Bitbucket is persistent even when the container is recreated it's useful to make the "/var/atlassian/bitbucket" directory persistent.
 ```bash
 docker run --detach \
-           --name Bitbucket \
-           --volume "/persistent/storage/atlassian/Bitbucket:/var/atlassian/Bitbucket" \
+           --name bitbucket \
+           --volume "/persistent/storage/atlassian/bitbucket:/var/atlassian/bitbucket" \
            --env "CATALINA_OPTS= -Xms512m -Xmx4g" \
            --publish 8090:8090 \
-           remonlam/Bitbucket:latest
+           remonlam/bitbucket:latest
 ```
 
 Once the image has been downloaded and container is fully started (this could take a few minutes), browse to `http://[dockerhost]:8090` to finish the configuration and enter your trail/license key.
@@ -65,4 +65,4 @@ Once the image has been downloaded and container is fully started (this could ta
 
 ## Issues, PR's and discussion
 
-If you see an issues please create an [issue](https://github.com/remonlam/docker-Bitbucket/issues/new) or even better fix it and create an [PR](https://github.com/remonlam/docker-Bitbucket/compare) :-)
+If you see an issues please create an [issue](https://github.com/remonlam/docker-bitbucket/issues/new) or even better fix it and create an [PR](https://github.com/remonlam/docker-bitbucket/compare) :-)
