@@ -5,8 +5,8 @@ The aim of this image is to keep the installation easy and as straight forward a
 
 It's possible to clone this repo and build the image on you're own machine, but if you think that's a waste of time ;-) there's a Automated Build in the Docker Hub that's based on this repo.
 
-* [Docker Hub - Automated Build](https://hub.docker.com/r/remonlam/bitbucket/)
-* [Atlassian Bitbucket latest build](https://confluence.atlassian.com/doc/confluence-release-notes-327.html)
+* [Docker Hub - Automated Build](https://hub.docker.com/r/containerstack/bitbucket/)
+* [Atlassian Bitbucket latest build](https://confluence.atlassian.com/bitbucketserver/bitbucket-server-release-notes-872139866.html)
 * [Oracle MySQL Connector J latest build](http://dev.mysql.com/downloads/connector/j/)
 * [Atlassian Bitbucket](https://www.atlassian.com/software/bitbucket)
 
