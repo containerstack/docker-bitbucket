@@ -2,7 +2,9 @@ FROM openjdk:8u121-alpine
 MAINTAINER Remon Lam [remon@containerstack.io]
 
 # Setting environment variables
-ENV BITBUCKET_VERSION=5.3.1
+
+ENV BITBUCKET_VERSION=5.3.0
+
 ENV JVM_MINIMUM_MEMORY="512m"
 ENV JVM_MAXIMUM_MEMORY="4G"
 # NOTE: depending on the deployment size JVM memory settings should be tuned
