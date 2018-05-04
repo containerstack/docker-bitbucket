@@ -3,7 +3,7 @@ MAINTAINER Remon Lam [remon@containerstack.io]
 
 # Setting environment variables
 
-ENV BITBUCKET_VERSION=5.4.4
+ENV BITBUCKET_VERSION=5.4.6
 
 ENV JVM_MINIMUM_MEMORY="512m"
 ENV JVM_MAXIMUM_MEMORY="4G"
