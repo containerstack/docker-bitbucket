@@ -12,7 +12,7 @@ It's possible to clone this repo and build the image on you're own machine, but 
 
 ## Versions
 Currently this repo have the following versions;
-* 5.4.8 (latest - not yet tested)
+* 5.4.9 (latest - not yet tested)
 * 5.4.0 (latest - tested)
 
 Go to [Branches](https://github.com/remonlam/docker-bitbucket/branches) to see all different builds that are available.
