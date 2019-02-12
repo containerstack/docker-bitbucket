@@ -16,7 +16,7 @@ ENV BITBUCKET_INSTALL_DIR /opt/atlassian/bitbucket
 ENV CONF_VERSION 6.3.0
 
 # Setting variables used at container build
-ARG DOWNLOAD_URL=https://downloads.atlassian.com/software/stash/downloads/atlassian-bitbucket-${BITBUCKET_VERSION}.tar.gz
+ARG DOWNLOAD_URL=https://product-downloads.atlassian.com/software/stash/downloads/atlassian-bitbucket-${BITBUCKET_VERSION}.tar.gz
 
 # Installing dependencies
 RUN apk update -qq \
