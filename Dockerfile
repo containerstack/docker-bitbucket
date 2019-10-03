@@ -1,6 +1,5 @@
 FROM openjdk:8u121-alpine
-MAINTAINER Remon Lam [remon@containerstack.io]
-
+LABEL maintainer="Remon Lam <remon@containerstack.io>"
 # Setting environment variables
 
 ENV BITBUCKET_VERSION=6.2.6
