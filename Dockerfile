@@ -2,7 +2,7 @@ FROM openjdk:8u121-alpine
 LABEL maintainer="Remon Lam <remon@containerstack.io>"
 # Setting environment variables
 
-ENV BITBUCKET_VERSION=6.4.0
+ENV BITBUCKET_VERSION=6.4.1
 
 ENV JVM_MINIMUM_MEMORY="512m"
 ENV JVM_MAXIMUM_MEMORY="4G"
